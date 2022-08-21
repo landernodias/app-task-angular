@@ -1,0 +1,17 @@
+<section [ngClass]="{'loading': !taskList.length}">
+  <ul *ngIf="taskList.length"> <!-- se não tiver item não aparece nada-->
+    <li *ngFor="let item of taskList; let i = index">
+      <input type="checkbox" [(ngModel)]="item.checked">
+      <input type="text" (keyup)="validationInput(item.task, i)" [(ngModel)]="item.task" [ngClass]="{'checked': item.checked}"> <!--recebe checked quando item.checked for true-->
+
+      <button (click)="deleteItemTaskList(i)"> <!--paça o index que é a posição do arry que sera deletado-->
+        <img src="assets/icons/icon-trash.svg" alt="">
+      </button>
+      <!-- {{item | json }} -->
+    </li>
+
+  </ul>
+</section>
+<app-todo-input-add-itens (emitItemTaskList)="setEmitTaskList($event)"></app-todo-input-add-itens><!--pega o evento emitido e seta ele na lista-->
+<app-todo-button-delete-all *ngIf="taskList.length" (click)="deleteAllTaskList()"></app-todo-button-delete-all>
+
